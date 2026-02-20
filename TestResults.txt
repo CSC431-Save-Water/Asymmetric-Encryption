@@ -1,0 +1,91 @@
+====================================================================
+  Asymmetric Encryption – Test Results
+  Algorithm : RSA-2048, OAEP/SHA-256 padding
+  Language  : Java (Standard SE – no third-party libraries)
+====================================================================
+
+NOTE: RSA with OAEP padding is probabilistic, so encrypted outputs
+will differ on every run even for the same plaintext. The outputs
+below are one representative execution. All three tests PASSED.
+
+--------------------------------------------------------------------
+Test Case 1 – Short Greeting (simple ASCII)
+--------------------------------------------------------------------
+Input Message:
+  Hello, World!
+
+Encrypted Output (Base64):
+  OOhounyK3fKdY1PvZNNPPMKhW4NLkRCnps5kwuGboyKF1c9/uNYOtskd97gDwn1j
+  JhJ8S612g6Hmx3eLVMP63/6sul7idefr+b6W0WvbuROk3HCfB5j9lxMnedXgUhWj
+  Q4qjOUXEegQ5fjuwAvY9GPTv2ADNQQkYaHVHFJB+HDmpreog+fGjoEvtCvj7MposQ
+  2waCDXFWD9CNUtdwe3FVW2QvhHrv/1F0u0+RyUb1b74IwHHZ0hh8STcF+cd+g+5y
+  CimsD7BkqWdHBjqeX3XBjG+zwrwtSSqAPZ8buYMLOUKZH1audyA9E+RDMzkZzGAK
+  D49kPZqua9HQA83SS5A+A==
+
+Decrypted Plaintext:
+  Hello, World!
+
+Result: PASS (decrypted output matches original input)
+
+--------------------------------------------------------------------
+Test Case 2 – Medium Sentence (typical use case)
+--------------------------------------------------------------------
+Input Message:
+  RSA encryption is a cornerstone of modern cybersecurity.
+
+Encrypted Output (Base64):
+  qrF3m2sVPBeiH0I6y0Ogh021AlOR4Ci1gruPUIXGf5HoWkpNjd645wRRHH016g0c
+  EJldERrgp1DOomsIUsYHry2QgRZ+LjUrDt2DViG1MHsxxCqPQe8qezM6pHLHyL+S
+  Bc//Y2DoW7hzKbG530MJWaTUo5L4geJTbMSe7c0qh7AQZn6YcO4DHUGL175+W9Bm
+  vcjm7eiMRou6cxbivyYuXJdPW0eQbuzshADNk4Z+0X5rtelUzTOqNCSrussCR+s0
+  TYuqvFArVzbEiS2KeiApl3S0mxtYP66nZ6mg/2nuRCGiXHNUmvti61N3j7/euGMn
+  HrlVkEjEw5zH89uOeCWfyw==
+
+Decrypted Plaintext:
+  RSA encryption is a cornerstone of modern cybersecurity.
+
+Result: PASS (decrypted output matches original input)
+
+--------------------------------------------------------------------
+Test Case 3 – Special Characters, Digits, and Punctuation
+--------------------------------------------------------------------
+Input Message:
+  Special chars: !@#$%^&*()_+ and numbers 1234567890.
+
+Encrypted Output (Base64):
+  ollhH1qEbZwscWpH1znbOcFa93fWPRgPtVCZNE/I0mmtK5ZECfw2NT50xJ3rtsCr
+  jSnuN/Z+kP+mWpReVBL8r+ShCbUD1xjCwnSpa0KPAsI65wxHBL5aLUcoCwgfIxO+
+  F5Tq5E9/rYcZs11HzqBIwPt/DOn6XtVkubeXXfVRC6EJHlcYBty0MfCok+aUg6+p
+  zrIVudZpxqHayaXuuOhu4h2W/hhfrC81YIywf8p2g6b9rO8S/slzsTTRAVsM33oS
+  GWiOTU/9LJIEhukhQCmJQ/6Hwp6UAw/lFE3fTapdGaHqWjHiUWKziPXfAcGcaT4u
+  rONQ3gCKLr2y5lJyhvdI2A==
+
+Decrypted Plaintext:
+  Special chars: !@#$%^&*()_+ and numbers 1234567890.
+
+Result: PASS (decrypted output matches original input)
+
+--------------------------------------------------------------------
+Summary
+--------------------------------------------------------------------
+Total Tests : 3
+Passed      : 3
+Failed      : 0
+
+Error Handling Verified (manual tests):
+  - Empty input         -> "Plaintext message cannot be empty."
+  - Oversized input     -> "Plaintext is too large. Maximum size: 190 bytes..."
+  - Invalid Base64 on
+    decrypt             -> "Ciphertext is not valid Base64..."
+  - Wrong key on
+    decrypt             -> "Decryption failed. Ensure the ciphertext is valid
+                            Base64 from the current key pair."
+
+Extra Credit Verified:
+  - Key save/load       -> public_key.der and private_key.der written/read
+                           successfully; subsequent encrypt/decrypt with
+                           loaded keys produces correct results.
+  - Digital signatures  -> SHA256withRSA signature created and verified;
+                           tampering with the message causes verify() to
+                           return INVALID.
+====================================================================
